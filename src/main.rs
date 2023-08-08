@@ -1,7 +1,8 @@
 mod solutions;
 use std::time::Instant;
 
-use solutions::nonnull_impl::DoubleLinkedList;
+//use solutions::nonnull_impl::DoubleLinkedList;
+use solutions::rc_impl::DoubleLinkedList;
 
 fn main() {
     let mut d = DoubleLinkedList::new();

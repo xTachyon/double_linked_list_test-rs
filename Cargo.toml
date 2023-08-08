@@ -1,0 +1,10 @@
+[package]
+name = "double_linked_list_test-rs"
+version = "0.1.0"
+edition = "2021"
+
+
+[features]
+MAKE_INLINE = []
+TEST_MODE = []
+

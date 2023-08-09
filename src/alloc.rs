@@ -6,6 +6,7 @@ use std::{
 const GB: usize = 1024 * 1024 * 1024;
 const TO_ALLOC: usize = GB + GB * 8 / 10;
 
+#[repr(C, align(16))]
 pub struct MyAlloc {
     buffer: [u8; TO_ALLOC],
     offset: Cell<usize>,
@@ -26,6 +27,7 @@ unsafe impl GlobalAlloc for MyAlloc {
     unsafe fn alloc(&self, layout: Layout) -> *mut u8 {
         const ALIGNMENT: usize = 16;
         assert!(layout.align() <= ALIGNMENT);
+        assert!(self.buffer.as_ptr() as usize % ALIGNMENT == 0);
 
         let size = (layout.size() + (ALIGNMENT - 1)) & (0usize.wrapping_sub(ALIGNMENT));
         let offset = self.offset.get();

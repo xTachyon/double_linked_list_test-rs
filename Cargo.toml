@@ -6,6 +6,8 @@ edition = "2021"
 [dependencies]
 slotmap = "1"
 ascii_table = "4"
+stats_alloc = "0.1.10"
+humansize = "2"
 
 [profile.release]
 lto = "fat"

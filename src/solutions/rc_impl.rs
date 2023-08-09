@@ -61,7 +61,9 @@ impl DoubleLinkedList {
                     None
                 };
             }
-            if next_node.is_none() { break; }
+            if next_node.is_none() {
+                break;
+            }
             current = next_node.unwrap();
         }
         sum

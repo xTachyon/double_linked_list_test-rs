@@ -4,7 +4,7 @@ pub struct Node {
     pub value: u64,
 }
 pub struct DoubleLinkedList {
-    data: Vec<Node>,
+    data: Vec<Option<Node>>,
     pub head: usize,
     pub tail: usize,
 }
@@ -16,11 +16,11 @@ impl DoubleLinkedList {
             head: 0,
             tail: 0,
         };
-        me.data.push(Node {
+        me.data.push(Some(Node {
             next: DoubleLinkedList::INVALID_INDEX,
             prec: DoubleLinkedList::INVALID_INDEX,
             value: 0,
-        });
+        }));
         me
     }
     pub fn add(&mut self, value: u64) {
@@ -29,15 +29,25 @@ impl DoubleLinkedList {
             prec: self.tail,
             value,
         };
-        self.data.push(new_node);
+        self.data.push(Some(new_node));
         let last_index = self.data.len() - 1;
-        self.data[self.tail].next = last_index; // last index
+        if let Some(previous_tail) = self.get_node_mut(self.tail) {
+            previous_tail.next = last_index;
+        } 
         self.tail = last_index;
     }
     #[inline(always)]
     fn get_node(&self, index: usize) -> Option<&Node> {
-        if index < self.data.len() {
-            Some(&self.data[index])
+        if index < self.data.len() {            
+            self.data[index].as_ref()
+        } else {
+            None
+        }
+    }
+    #[inline(always)]
+    fn get_node_mut(&mut self, index: usize) -> Option<&mut Node> {
+        if index < self.data.len() {            
+            self.data[index].as_mut()
         } else {
             None
         }

@@ -70,7 +70,7 @@ fn main() {
     bench!(handle_impl);
 
     let mut ascii_table = AsciiTable::default();
-    ascii_table.set_max_width(80);
+    ascii_table.set_max_width(100);
     ascii_table.column(0).set_header("name");
     ascii_table.column(1).set_header("creation");
     ascii_table.column(2).set_header("run");

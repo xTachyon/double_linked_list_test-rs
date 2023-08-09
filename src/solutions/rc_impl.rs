@@ -6,12 +6,24 @@ use std::{
 pub struct Node {
     pub next: Option<Rc<RefCell<Node>>>,
     pub prec: Option<Weak<RefCell<Node>>>,
-    pub value: i32,
+    pub value: u64,
 }
 
 pub struct DoubleLinkedList {
     pub head: Rc<RefCell<Node>>,
     pub tail: Rc<RefCell<Node>>,
+}
+
+impl Drop for Node {
+    fn drop(self: &mut Node) {
+        loop {
+            let Some(next) = self.next.take() else {
+                return;
+            };
+            let next = next.borrow_mut().next.take();
+            self.next = next;
+        }
+    }
 }
 
 impl DoubleLinkedList {
@@ -26,7 +38,7 @@ impl DoubleLinkedList {
             tail: start_node.clone(),
         }
     }
-    pub fn add(&mut self, value: i32) {
+    pub fn add(&mut self, value: u64) {
         let new_node = Rc::new(RefCell::new(Node {
             next: None,
             prec: Some(Rc::downgrade(&self.tail)),
@@ -35,7 +47,7 @@ impl DoubleLinkedList {
         (*self.tail.borrow_mut()).next = Some(new_node.clone());
         self.tail = new_node;
     }
-    pub fn sum_all(&self) -> i32 {
+    pub fn sum_all(&self) -> u64 {
         let mut sum = 0;
         let mut current = self.head.clone();
         loop {

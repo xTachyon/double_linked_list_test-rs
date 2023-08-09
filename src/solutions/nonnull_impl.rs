@@ -3,7 +3,7 @@ use std::ptr::NonNull;
 pub struct Node {
     pub next: Option<NonNull<Node>>,
     pub prec: Option<NonNull<Node>>,
-    pub value: i32,
+    pub value: u64,
 }
 pub struct DoubleLinkedList {
     pub head: *mut Node,
@@ -21,7 +21,7 @@ impl DoubleLinkedList {
             tail: start_node,
         }
     }
-    pub fn add(&mut self, value: i32) {
+    pub fn add(&mut self, value: u64) {
         let new_node = Box::into_raw(Box::new(Node {
             next: None,
             prec: None,
@@ -33,7 +33,7 @@ impl DoubleLinkedList {
         }
         self.tail = new_node;
     }
-    pub fn sum_all(&self) -> i32 {
+    pub fn sum_all(&self) -> u64 {
         let mut sum = 0;
         let mut current = self.head;
         loop {

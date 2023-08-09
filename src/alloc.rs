@@ -16,7 +16,7 @@ unsafe impl Sync for MyAlloc {}
 impl MyAlloc {
     pub const fn new() -> MyAlloc {
         MyAlloc {
-            buffer: [0; TO_ALLOC],
+            buffer: [5; TO_ALLOC],
             offset: Cell::new(0),
         }
     }

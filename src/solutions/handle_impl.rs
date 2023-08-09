@@ -1,6 +1,4 @@
-use std::sync::atomic::{AtomicUsize, Ordering};
-
-static GLOBAL_HANDLE_UNIQUE_ID: AtomicUsize = AtomicUsize::new(0);
+static mut GLOBAL_HANDLE_UNIQUE_ID: u32 = 0;
 
 #[derive(Copy, Clone)]
 pub struct Handle {
@@ -13,8 +11,10 @@ impl Handle {
         unique_id: 0xFFFFFFFF,
     };
     pub fn new(index: u32) -> Handle {
-        let unique_id =
-            (GLOBAL_HANDLE_UNIQUE_ID.fetch_add(1, Ordering::SeqCst) as u32) % 0xFFFF_FFFE;
+        let unique_id = unsafe {
+            GLOBAL_HANDLE_UNIQUE_ID = (GLOBAL_HANDLE_UNIQUE_ID + 1) % 0xFFFF_FFFE;
+            GLOBAL_HANDLE_UNIQUE_ID
+        };
         Self { index, unique_id }
     }
 }

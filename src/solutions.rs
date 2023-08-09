@@ -1,4 +1,5 @@
 pub mod nonnull_impl;
 pub mod rc_impl;
-pub mod slotmap;
-pub mod std_linked_list;
+pub mod slotmap_impl;
+pub mod std_linked_list_impl;
+pub mod index_impl;

@@ -25,7 +25,7 @@ pub struct Node {
     pub unique_id: u32,
 }
 pub struct DoubleLinkedList {
-    data: Vec<Node>,
+    data: Vec<Option<Node>>,
     pub head: Handle,
     pub tail: Handle,
 }
@@ -37,12 +37,12 @@ impl DoubleLinkedList {
             head: first_element_handle,
             tail: first_element_handle,
         };
-        me.data.push(Node {
+        me.data.push(Some(Node {
             next: Handle::INVALID,
             prec: Handle::INVALID,
             value: 0,
             unique_id: first_element_handle.unique_id,
-        });
+        }));
         me
     }
     pub fn add(&mut self, value: u64) {
@@ -54,18 +54,39 @@ impl DoubleLinkedList {
             value,
             unique_id: new_node_handle.unique_id,
         };
-        self.data.push(new_node);
-
-        self.data[self.tail.index as usize].next = new_node_handle; // last index
+        self.data.push(Some(new_node));
+        if let Some(previous_tail) = self.get_node_mut(self.tail) {
+            previous_tail.next = new_node_handle;
+        }
         self.tail = new_node_handle;
     }
     #[inline(always)]
     fn get_node(&self, handle: Handle) -> Option<&Node> {
         let index = handle.index as usize;
         if index < self.data.len() {
-            let obj = &self.data[index];
-            if obj.unique_id == handle.unique_id {
-                Some(&self.data[index])
+            if let Some(obj) = &self.data[index] {
+                if obj.unique_id == handle.unique_id {
+                    self.data[index].as_ref()
+                } else {
+                    None
+                }
+            } else {
+                None
+            }
+        } else {
+            None
+        }
+    }
+    #[inline(always)]
+    fn get_node_mut(&mut self, handle: Handle) -> Option<&mut Node> {
+        let index = handle.index as usize;
+        if index < self.data.len() {
+            if let Some(obj) = &self.data[index] {
+                if obj.unique_id == handle.unique_id {
+                    self.data[index].as_mut()
+                } else {
+                    None
+                }
             } else {
                 None
             }

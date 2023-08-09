@@ -1,15 +1,14 @@
 use std::collections::LinkedList;
 
-
 pub struct DoubleLinkedList {
-    list: LinkedList<u64>
+    list: LinkedList<u64>,
 }
 
 impl DoubleLinkedList {
     pub fn new() -> DoubleLinkedList {
-        DoubleLinkedList {
-            list: LinkedList::new()
-        }
+        let mut list = LinkedList::new();
+        list.push_back(0);
+        DoubleLinkedList { list }
     }
     pub fn add(&mut self, value: u64) {
         self.list.push_back(value);

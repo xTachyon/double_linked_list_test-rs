@@ -5,7 +5,7 @@ pub struct DoubleLinkedList {
 }
 
 impl DoubleLinkedList {
-    pub fn new() -> DoubleLinkedList {
+    pub fn new(_capacity: usize) -> DoubleLinkedList {
         let mut list = LinkedList::new();
         list.push_back(0);
         DoubleLinkedList { list }

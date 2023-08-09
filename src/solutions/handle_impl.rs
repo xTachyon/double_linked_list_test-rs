@@ -30,10 +30,10 @@ pub struct DoubleLinkedList {
     pub tail: Handle,
 }
 impl DoubleLinkedList {
-    pub fn new() -> Self {
+    pub fn new(capacity: usize) -> Self {
         let first_element_handle = Handle::new(0);
         let mut me = Self {
-            data: Vec::with_capacity(256),
+            data: Vec::with_capacity(capacity),
             head: first_element_handle,
             tail: first_element_handle,
         };

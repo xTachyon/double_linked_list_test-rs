@@ -10,9 +10,9 @@ pub struct DoubleLinkedList {
 }
 impl DoubleLinkedList {
     pub const INVALID_INDEX: usize = usize::MAX;
-    pub fn new() -> Self {
+    pub fn new(capacity: usize) -> Self {
         let mut me = Self {
-            data: Vec::with_capacity(256),
+            data: Vec::with_capacity(capacity),
             head: 0,
             tail: 0,
         };

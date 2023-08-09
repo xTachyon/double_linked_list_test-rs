@@ -16,8 +16,8 @@ pub struct DoubleLinkedList {
 }
 
 impl DoubleLinkedList {
-    pub fn new() -> DoubleLinkedList {
-        let mut map = SlotMap::with_key();
+    pub fn new(capacity: usize) -> DoubleLinkedList {
+        let mut map = SlotMap::with_capacity_and_key(capacity);
         let node = map.insert(Node {
             next: None,
             prec: None,

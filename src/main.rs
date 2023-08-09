@@ -22,7 +22,7 @@ fn main() {
     macro_rules! bench {
         ($t:ident) => {
             let time = Instant::now();
-            let mut obj = $t::DoubleLinkedList::new();
+            let mut obj = $t::DoubleLinkedList::new((ITERATIONS+1) as usize);
             for index in 0..ITERATIONS {
                 obj.add(ITERATIONS - index);
             }
@@ -76,25 +76,30 @@ fn main() {
     ascii_table.column(2).set_header("run");
     ascii_table.column(3).set_header("destroy");
     ascii_table.column(4).set_header("total");
-    ascii_table.column(5).set_header("slower");
+    ascii_table.column(5).set_header("slower(total)");
+    ascii_table.column(6).set_header("slower(run)");
 
     let min_total = data.iter().map(|x| x.total_time).min().unwrap() as f64;
-    let mut slower = Vec::with_capacity(data.len());
+    let min_run = data.iter().map(|x| x.run_time).min().unwrap() as f64;
+    let mut slower_total = Vec::with_capacity(data.len());
+    let mut slower_run = Vec::with_capacity(data.len());
     for i in data.iter() {
-        slower.push(format!("{:.02}x", i.total_time as f64 / min_total));
+        slower_total.push(format!("{:.02}x", i.total_time as f64 / min_total));
+        slower_run.push(format!("{:.02}x", i.run_time as f64 / min_run));
     }
 
     let it = data
         .iter()
         .enumerate()
-        .map(|(index, x)| -> [&dyn Display; 6] {
+        .map(|(index, x)| -> [&dyn Display; 7] {
             [
                 &x.name,
                 &x.creation_time,
                 &x.run_time,
                 &x.destroy_time,
                 &x.total_time,
-                &slower[index],
+                &slower_total[index],
+                &slower_run[index],
             ]
         });
     ascii_table.print(it);

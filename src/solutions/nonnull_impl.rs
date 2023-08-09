@@ -10,7 +10,7 @@ pub struct DoubleLinkedList {
     pub tail: *mut Node,
 }
 impl DoubleLinkedList {
-    pub fn new() -> Self {
+    pub fn new(_capacity: usize) -> Self {
         let start_node = Box::into_raw(Box::new(Node {
             next: None,
             prec: None,

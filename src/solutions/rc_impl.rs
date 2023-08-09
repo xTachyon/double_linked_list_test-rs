@@ -27,7 +27,7 @@ impl Drop for Node {
 }
 
 impl DoubleLinkedList {
-    pub fn new() -> Self {
+    pub fn new(_capacity: usize) -> Self {
         let start_node = Rc::new(RefCell::new(Node {
             next: None,
             prec: None,

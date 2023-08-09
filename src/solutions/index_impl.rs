@@ -33,12 +33,12 @@ impl DoubleLinkedList {
         let last_index = self.data.len() - 1;
         if let Some(previous_tail) = self.get_node_mut(self.tail) {
             previous_tail.next = last_index;
-        } 
+        }
         self.tail = last_index;
     }
     #[inline(always)]
     fn get_node(&self, index: usize) -> Option<&Node> {
-        if index < self.data.len() {            
+        if index < self.data.len() {
             self.data[index].as_ref()
         } else {
             None
@@ -46,7 +46,7 @@ impl DoubleLinkedList {
     }
     #[inline(always)]
     fn get_node_mut(&mut self, index: usize) -> Option<&mut Node> {
-        if index < self.data.len() {            
+        if index < self.data.len() {
             self.data[index].as_mut()
         } else {
             None

@@ -1,16 +1,17 @@
+mod alloc;
 mod solutions;
 
+use alloc::MyAlloc;
 use ascii_table::AsciiTable;
 use humansize::{format_size, BINARY};
 use solutions::*;
-use stats_alloc::{Region, StatsAlloc, INSTRUMENTED_SYSTEM};
-use std::alloc::System;
+use stats_alloc::{Region, StatsAlloc};
 use std::fmt::Display;
 use std::hint::black_box;
 use std::time::Instant;
 
 #[global_allocator]
-static GLOBAL: &StatsAlloc<System> = &INSTRUMENTED_SYSTEM;
+static GLOBAL: StatsAlloc<MyAlloc> = StatsAlloc::new(MyAlloc::new());
 
 const ITERATIONS: u64 = 10_000_000;
 
@@ -84,9 +85,9 @@ fn main() {
 
     bench!(nonnull_impl);
     bench!(slotmap_impl);
-    bench!(std_map_impl);
+    // bench!(std_map_impl);
     bench!(std_linked_list_impl);
-    bench!(rc_impl);
+    // bench!(rc_impl);
     bench!(index_impl);
     bench!(handle_impl);
 

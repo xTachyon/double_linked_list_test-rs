@@ -6,7 +6,7 @@ edition = "2021"
 [dependencies]
 slotmap = "1"
 ascii_table = "4"
-stats_alloc = "0.1.10"
+stats_alloc = { version = "0.1.10", features = ["nightly"] }
 humansize = "2"
 
 [profile.release]

@@ -6,7 +6,7 @@ use std::fmt::Display;
 use std::hint::black_box;
 use std::time::Instant;
 
-const ITERATIONS: u64 = 100_000;
+const ITERATIONS: u64 = 10_000_000;
 
 struct Row {
     name: &'static str,
@@ -67,6 +67,7 @@ fn main() {
     bench!(std_linked_list_impl);
     bench!(rc_impl);
     bench!(index_impl);
+    bench!(handle_impl);
 
     let mut ascii_table = AsciiTable::default();
     ascii_table.set_max_width(80);
